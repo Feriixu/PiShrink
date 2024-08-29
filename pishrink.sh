@@ -128,6 +128,7 @@ cat <<EOF > /etc/rc.local &&
 #!/bin/sh
 echo "Expanding /dev/$ROOT_PART"
 resize2fs /dev/$ROOT_PART
+touch /etc/resize-done
 rm -f /etc/rc.local; cp -fp /etc/rc.local.bak /etc/rc.local && /etc/rc.local
 
 EOF
@@ -139,6 +140,7 @@ raspi_config_expand() {
 if [[ $? != 0 ]]; then
   return -1
 else
+  touch /etc/resize-done
   rm -f /etc/rc.local; cp -fp /etc/rc.local.bak /etc/rc.local && /etc/rc.local
   reboot
   exit
